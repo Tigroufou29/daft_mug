@@ -1,0 +1,8 @@
+Dossier des réponses impulsionnelles (IR) de Daft Mug
+=====================================================
+Déposez ici VOS fichiers WAV (aucun IR n'est fourni, aucun n'est inventé).
+Nommage prévu pour les 4 emplacements de la liste déroulante :
+  Plate.wav   Hall.wav   Stadium.wav   SFX.wav
+"Reverb perso" permet de choisir n'importe quel autre fichier depuis l'interface.
+Formats : WAV mono ou stéréo, toute fréquence d'échantillonnage (rééchantillonné au chargement).
+Respectez la licence de chaque IR que vous utilisez.

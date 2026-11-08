@@ -1,0 +1,42 @@
+﻿CONDITIONS D'UTILISATION — DAFT MUG
+
+Merci de lire attentivement ce texte avant d'installer Daft Mug. En cochant « J'accepte », vous reconnaissez l'avoir lu et vous l'acceptez.
+
+1. Éditeur du logiciel
+Daft Mug est édité par Oxy Gen Prod. (c) Oxy Gen Prod. 2026 — Philippe Marin. Tous droits réservés.
+
+2. Licence : gratuit et non commercial
+Daft Mug est fourni gratuitement, pour un usage NON COMMERCIAL uniquement : usage personnel, pédagogique, associatif ou de loisir, sans but lucratif.
+Vous pouvez : installer Daft Mug sur vos ordinateurs personnels, l'utiliser et en parler librement.
+Sans autorisation écrite préalable d'Oxy Gen Prod., vous ne pouvez pas :
+• vendre, louer ou faire payer Daft Mug, seul ou inclus dans un produit, un pack ou un service ;
+• l'utiliser dans un cadre commercial (production ou prestation rémunérée, activité professionnelle, usage en entreprise) ;
+• le redistribuer sous une autre forme que l'installateur officiel d'origine, ni le modifier, le décompiler ou en extraire des éléments (sauf dans les limites permises par la loi).
+Le logo, le nom « Daft Mug » et les visuels restent la propriété d'Oxy Gen Prod.
+Daft Mug utilise des composants tiers soumis à leurs propres licences (notamment le framework JUCE). VST est une marque déposée de Steinberg Media Technologies GmbH.
+
+3. Règles d'utilisation
+Daft Mug est un sampler : vous l'utilisez pour créer de la musique et du son. Ne l'utilisez pas pour porter atteinte aux droits d'autrui.
+
+4. Absence de garantie et limites de responsabilité
+Daft Mug est fourni « en l'état », sans garantie d'aucune sorte, notamment de fonctionnement ininterrompu, de compatibilité avec tous les logiciels ou de résultat. Dans la mesure permise par la loi, Oxy Gen Prod. ne peut être tenu responsable des dommages (perte de données, de projets ou de temps, matériel endommagé) liés à l'utilisation du logiciel. Pensez à sauvegarder vos projets.
+Un niveau sonore excessif peut endommager du matériel ou l'audition : réglez toujours votre volume d'écoute avec prudence.
+
+5. Samples et droits
+Vous êtes seul responsable des fichiers audio que vous importez : vous devez détenir les droits nécessaires (licence, autorisation) pour les utiliser, les modifier, les exporter et les distribuer. Daft Mug ne vérifie pas ces droits. Les fonctions de collecte et d'export copient vos fichiers sur votre ordinateur uniquement.
+
+6. Module IA facultatif (Daft Mug AI)
+• Il est désactivé par défaut ; le sampler fonctionne entièrement sans lui (hors ligne, sans clé).
+• Il fonctionne avec VOTRE propre clé API Gemini, que vous obtenez et gérez vous-même auprès de Google. Aucune clé n'est fournie avec Daft Mug ni incluse dans l'installateur.
+• Ses propositions ne sont jamais appliquées sans votre action et peuvent être inexactes.
+• Lorsque vous envoyez une demande, Daft Mug transmet à Google (HTTPS) : le texte de votre demande, le type de sample choisi, le nom du pad, la liste des réglages avec leurs valeurs actuelles et votre clé API. Daft Mug n'envoie PAS vos fichiers audio, les chemins de vos fichiers ni votre projet. Le traitement par Google relève de ses propres conditions ; ne saisissez pas d'informations confidentielles.
+• L'utilisation de l'API Gemini peut être limitée par des quotas ou facturée par Google : ces coûts sont à votre charge.
+• La clé est conservée dans le coffre d'identifiants du système (Windows : gestionnaire d'informations d'identification) ; vous pouvez l'effacer à tout moment dans Options > IA et confidentialité.
+
+7. Confidentialité
+Daft Mug ne collecte aucune donnée personnelle, n'a aucun compte ni télémétrie. Hors module IA que vous activez vous-même, il ne communique pas sur Internet.
+
+8. Droit applicable
+Ces conditions sont régies par le droit français.
+
+Version 0.1.0 — (c) Oxy Gen Prod. 2026

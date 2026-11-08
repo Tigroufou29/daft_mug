@@ -1,0 +1,20 @@
+# Builds Daft Mug on Windows (MSVC) and macOS and runs the engine tests. NOT run yet (needs a GitHub repository).
+name: build
+on: [push, workflow_dispatch]
+jobs:
+  windows:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+      - run: cmake --build build --config Release --target DaftMug_VST3 DaftMug_Standalone daftmug_engine_tests
+      - run: ctest --test-dir build -C Release --output-on-failure
+      - uses: actions/upload-artifact@v4
+        with: { name: daftmug-windows, path: build/DaftMug_artefacts/Release }
+  macos:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build --config Release --target DaftMug_VST3 DaftMug_Standalone daftmug_engine_tests
+      - run: ctest --test-dir build --output-on-failure
