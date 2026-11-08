@@ -3,3 +3,8 @@ cmake-build-*/
 .vs/
 .idea/
 *.user
+
+DaftMug/
+DaftMug.zip
+DaftMug-Setup-*.exe
+build/

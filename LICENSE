@@ -1,23 +1,17 @@
-﻿Daft Mug - Copyright (c) 2026 Oxy Gen Prod. (Philippe Marin). Tous droits reserves.
-Daft Mug - Copyright (c) 2026 Oxy Gen Prod. (Philippe Marin). All rights reserved.
+﻿Daft Mug - (c) Oxy Gen Prod. 2026. Tous droits reserves.
 
-LICENCE A USAGE NON COMMERCIAL / NON-COMMERCIAL LICENSE
+Daft Mug est gratuit et destine a une utilisation NON COMMERCIALE.
 
-FR - Ce logiciel et son code source sont fournis gratuitement, pour un usage personnel, pedagogique,
-associatif ou de loisir, sans but lucratif. Vous pouvez les telecharger, les compiler et les utiliser
-pour cet usage.
-Sans autorisation ecrite prealable d'Oxy Gen Prod., il est INTERDIT : de les vendre, louer ou faire payer,
-seuls ou inclus dans un produit, un pack ou un service ; de les utiliser dans un cadre commercial ou
-professionnel remunere ; de redistribuer le code ou des versions modifiees ; d'utiliser le nom "Daft Mug"
-ou son logo pour un autre produit.
-Le logiciel est fourni "en l'etat", sans garantie d'aucune sorte ; Oxy Gen Prod. ne peut etre tenu
-responsable des dommages lies a son utilisation.
-Le logiciel utilise des composants tiers (notamment JUCE) soumis a leurs propres licences.
+Vous pouvez : telecharger, installer et utiliser Daft Mug gratuitement,
+pour un usage personnel, pedagogique ou artistique non commercial.
 
-EN - This software and its source code are provided free of charge for personal, educational, non-profit
-or hobby use only. You may download, build and use them for that purpose.
-Without prior written permission from Oxy Gen Prod. you may NOT: sell, rent or charge for them, alone or
-bundled in a product, pack or service; use them in any commercial or paid professional context; redistribute
-the code or modified versions; use the name "Daft Mug" or its logo for another product.
-The software is provided "as is", without warranty of any kind; Oxy Gen Prod. is not liable for any damages
-arising from its use. Third-party components (including JUCE) are subject to their own licenses.
+Vous ne pouvez pas, sans accord ecrit d'Oxy Gen Prod. : vendre, louer ou
+revendre Daft Mug ou une version modifiee ; l'integrer a un produit ou service
+payant ; en redistribuer le code source ou les binaires a titre commercial.
+
+Les morceaux de musique crees avec Daft Mug vous appartiennent.
+
+Daft Mug est fourni "en l'etat", sans garantie d'aucune sorte. L'auteur ne peut
+etre tenu responsable des dommages lies a son utilisation.
+
+Daft Mug utilise le framework JUCE, soumis a sa propre licence (juce.com).

@@ -1,4 +1,6 @@
-# Builds Daft Mug on Windows (MSVC) and macOS and runs the engine tests. NOT run yet (needs a GitHub repository).
+# Builds Daft Mug on Windows (MSVC) and macOS, runs the engine tests, and makes a macOS .dmg.
+# Run it from the "Actions" tab of the GitHub repository (button "Run workflow"), or by pushing to the repository.
+# The macOS app is signed "ad hoc" only (no Apple Developer account): other Macs show an "unidentified developer" warning.
 name: build
 on: [push, workflow_dispatch]
 jobs:
@@ -15,6 +17,38 @@ jobs:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
-      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-      - run: cmake --build build --config Release --target DaftMug_VST3 DaftMug_Standalone daftmug_engine_tests
-      - run: ctest --test-dir build --output-on-failure
+      - name: Configure (universal Intel + Apple Silicon, macOS 11+)
+        run: >
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+          -DDAFTMUG_BUILD_SMOKE_TEST=OFF
+      - name: Build
+        run: cmake --build build --config Release --target DaftMug_VST3 DaftMug_AU DaftMug_Standalone daftmug_engine_tests -j 4
+      - name: Engine tests
+        run: ctest --test-dir build --output-on-failure
+      - name: Make the DMG
+        run: |
+          set -e
+          APP=$(find build -type d -name "Daft Mug.app" | head -1)
+          VST3=$(find build -type d -name "Daft Mug.vst3" | head -1)
+          AU=$(find build -type d -name "Daft Mug.component" | head -1)
+          echo "app=$APP vst3=$VST3 au=$AU"
+          mkdir -p stage/Plug-ins
+          cp -R "$APP" stage/
+          [ -n "$VST3" ] && cp -R "$VST3" stage/Plug-ins/
+          [ -n "$AU" ] && cp -R "$AU" stage/Plug-ins/
+          # ad-hoc signature (not an Apple Developer signature)
+          for b in stage/*.app stage/Plug-ins/*; do codesign --force --deep -s - "$b"; done
+          ln -s /Applications stage/Applications
+          cat > stage/LISEZMOI.txt <<'TXT'
+          Daft Mug (c) Oxy Gen Prod. 2026 - gratuit, usage non commercial.
+
+          Installation : glissez "Daft Mug.app" dans Applications.
+          Plug-ins : copiez "Daft Mug.vst3" dans /Bibliotheque/Audio/Plug-Ins/VST3 et "Daft Mug.component" dans /Bibliotheque/Audio/Plug-Ins/Components.
+
+          Cette version n'est pas signee par un compte Apple Developer : au premier lancement, faites clic droit > Ouvrir,
+          ou Reglages Systeme > Confidentialite et securite > "Ouvrir quand meme".
+          TXT
+          hdiutil create -volname "Daft Mug" -srcfolder stage -ov -format UDZO DaftMug-0.1.0-mac.dmg
+      - uses: actions/upload-artifact@v4
+        with: { name: daftmug-macos-dmg, path: DaftMug-0.1.0-mac.dmg }
