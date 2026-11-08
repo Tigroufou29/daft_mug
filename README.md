@@ -101,3 +101,15 @@ Pas encore : installeur, macOS (stockage de clé dans le Trousseau à écrire), 
 - **Volume maître et limiteur de sortie** : Options > SORTIE (voyant LIM sur le VU-mètre). Latence du limiteur : 1,5 ms, constante.
 - **Annuler / rétablir** : Ctrl+Z / Ctrl+Y (Cmd sur Mac) et boutons dans l'en-tête.
 - **Validation** : `Tests/validate_pluginval.ps1` (pluginval).
+
+## Téléchargement
+
+Gratuit, usage non commercial. Dernière version : https://github.com/Tigroufou29/daft_mug/releases/latest
+
+| Système | Fichier |
+|---|---|
+| Windows | [DaftMug-Setup-0.1.0.exe](https://github.com/Tigroufou29/daft_mug/releases/download/v0.1.0/DaftMug-Setup-0.1.0.exe) |
+| macOS | [DaftMug-0.1.0-mac.dmg](https://github.com/Tigroufou29/daft_mug/releases/download/v0.1.0/DaftMug-0.1.0-mac.dmg) |
+| Linux | [DaftMug-0.1.0-linux-x86_64.tar.gz](https://github.com/Tigroufou29/daft_mug/releases/download/v0.1.0/DaftMug-0.1.0-linux-x86_64.tar.gz) |
+
+Les installateurs ne sont pas signés : Windows peut afficher un avertissement SmartScreen (« Informations complémentaires » puis « Exécuter quand même »). Sur Mac, faites clic droit puis Ouvrir au premier lancement.
