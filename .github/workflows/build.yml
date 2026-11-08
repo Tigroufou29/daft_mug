@@ -1,4 +1,4 @@
-# Builds Daft Mug on Windows (MSVC) and macOS, runs the engine tests, and makes a macOS .dmg.
+﻿# Builds Daft Mug on Windows (MSVC) and macOS, runs the engine tests, and makes a macOS .dmg.
 # Run it from the "Actions" tab of the GitHub repository (button "Run workflow"), or by pushing to the repository.
 # The macOS app is signed "ad hoc" only (no Apple Developer account): other Macs show an "unidentified developer" warning.
 name: build
@@ -14,7 +14,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with: { name: daftmug-windows, path: build/DaftMug_artefacts/Release }
   macos:
-    runs-on: macos-14
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - name: Configure (universal Intel + Apple Silicon, macOS 11+)
