@@ -1,8 +1,21 @@
-﻿# Builds Daft Mug on Windows (MSVC) and macOS, runs the engine tests, and makes a macOS .dmg.
-# Run it from the "Actions" tab of the GitHub repository (button "Run workflow"), or by pushing to the repository.
-# The macOS app is signed "ad hoc" only (no Apple Developer account): other Macs show an "unidentified developer" warning.
+# Builds Daft Mug for Windows (installer .exe), macOS (.dmg) and Linux (.tar.gz), runs the engine tests,
+# and publishes the three files as a GitHub Release when a version tag is pushed (for example v0.1.0).
+#
+#  - Test build only:   Actions tab > "build" > "Run workflow"   (files are kept as "artifacts" of the run for 90 days)
+#  - Public download:   git tag v0.1.0 ; git push origin v0.1.0  (a Release page with the 3 files is created)
+#
+# macOS is signed "ad hoc" only (no Apple Developer account), the Windows installer is not signed either:
+# Windows SmartScreen / macOS Gatekeeper will show a warning on first launch.
 name: build
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches: ['**']
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to create the Release
+
 jobs:
   windows:
     runs-on: windows-2022
@@ -11,8 +24,22 @@ jobs:
       - run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64
       - run: cmake --build build --config Release --target DaftMug_VST3 DaftMug_Standalone daftmug_engine_tests
       - run: ctest --test-dir build -C Release --output-on-failure
+      - name: Install Inno Setup
+        run: choco install innosetup -y --no-progress
+      - name: Build the installer
+        shell: pwsh
+        run: |
+          $iscc = (Get-ChildItem "C:\Program Files*\Inno Setup*\ISCC.exe" | Select-Object -First 1).FullName
+          & $iscc installer\DaftMug.iss
+          if ($LASTEXITCODE -ne 0) {
+            # older Inno Setup without the dark wizard style: retry with the standard one
+            (Get-Content installer\DaftMug.iss) -replace 'WizardStyle=modern dark','WizardStyle=modern' | Set-Content installer\DaftMug.iss -Encoding UTF8
+            & $iscc installer\DaftMug.iss
+            if ($LASTEXITCODE -ne 0) { exit 1 }
+          }
       - uses: actions/upload-artifact@v4
-        with: { name: daftmug-windows, path: build/DaftMug_artefacts/Release }
+        with: { name: daftmug-windows-installer, path: build/installer/DaftMug-Setup-*.exe }
+
   macos:
     runs-on: macos-latest
     steps:
@@ -52,3 +79,56 @@ jobs:
           hdiutil create -volname "Daft Mug" -srcfolder stage -ov -format UDZO DaftMug-0.1.0-mac.dmg
       - uses: actions/upload-artifact@v4
         with: { name: daftmug-macos-dmg, path: DaftMug-0.1.0-mac.dmg }
+
+  linux:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install the libraries JUCE needs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev libjack-jackd2-dev ladspa-sdk libcurl4-openssl-dev libfreetype-dev \
+            libfontconfig1-dev libx11-dev libxcomposite-dev libxcursor-dev libxext-dev libxinerama-dev libxrandr-dev \
+            libxrender-dev libgl1-mesa-dev mesa-common-dev
+      - name: Configure and build
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DDAFTMUG_BUILD_SMOKE_TEST=OFF
+          cmake --build build --config Release --target DaftMug_VST3 DaftMug_Standalone daftmug_engine_tests -j 4
+      - name: Engine tests
+        run: ctest --test-dir build --output-on-failure
+      - name: Package
+        run: |
+          set -e
+          APP=$(find build -type f -name "Daft Mug" -perm -u+x | head -1)
+          VST3=$(find build -type d -name "Daft Mug.vst3" | head -1)
+          echo "app=$APP vst3=$VST3"
+          mkdir -p pkg/DaftMug
+          cp "$APP" pkg/DaftMug/
+          cp -R "$VST3" pkg/DaftMug/
+          cat > pkg/DaftMug/LISEZMOI.txt <<'TXT'
+          Daft Mug (c) Oxy Gen Prod. 2026 - gratuit, usage non commercial.
+
+          Application : lancez ./"Daft Mug" (chmod +x si besoin).
+          Plug-in : copiez le dossier "Daft Mug.vst3" dans ~/.vst3/ puis relancez le scan de votre logiciel de musique.
+          Necessite les bibliotheques systeme habituelles (ALSA, X11, FreeType, Fontconfig).
+          TXT
+          tar -C pkg -czf DaftMug-0.1.0-linux-x86_64.tar.gz DaftMug
+      - uses: actions/upload-artifact@v4
+        with: { name: daftmug-linux, path: DaftMug-0.1.0-linux-x86_64.tar.gz }
+
+  release:
+    # only when a version tag is pushed
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [windows, macos, linux]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { path: dist, merge-multiple: true }
+      - run: ls -la dist
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/DaftMug-Setup-*.exe
+            dist/DaftMug-*-mac.dmg
+            dist/DaftMug-*-linux-x86_64.tar.gz
+          generate_release_notes: true
